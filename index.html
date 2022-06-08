@@ -116,12 +116,28 @@
         );
         function filterDate(){
            // (new Date('2021-11-01 00:00:00 GMT+0800'))
-          const start1 = document.getElementById('start').value;
+          const start1 = new Date(document.getElementById('start').value);
           const start = start1.setHours(0,0,0,0);
-          const end1 = document.getElementById('end').value;
+          const end1 = new Date(document.getElementById('end').value);
           const end= end1.setHours(0,0,0,0);
 
-          const filterDates
+          const filterDates = convertedDates.filter(date => date >= start && date <= end)
+          myChart.config.data.labels = filterDates;
+
+          //working on the data
+          const startArray = convertedDates.indexOf(filterDates[0])
+          const endArray = convertedDates.indexOf(filterDates[filterDates.length - 1])
+          const copydatapoints =[...datapoints];
+          copydatapoints.splice(endArray + 1, filterDates.length )
+          copydatapoints.splice(0,startArray);
+          console.log(copydatapoints);
+          myChart.config.data.datasets[0].data =copydatapoints;
+          myChart.update();
+        }
+        function resetDate(){
+           myChart.config.data.labels=convertedDates;
+           myChart.config.data.datasets[0].data = datapoints;
+            myChart.update();
         }
     </script>
 
