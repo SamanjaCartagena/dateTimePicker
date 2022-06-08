@@ -50,18 +50,30 @@
     <div class="chartCard">
         <div class="chartBox">
             <canvas id="myChart"></canvas>
+            Start:<input id="start" type="date" min="2021-11-01" max="2021-11-07" value="2021-11-02"> 
+            End:<input id="end" type="date"
+            min="2021-11-04" max="2021-11-07" value="2021-11-05">
+            <button onclick="filterDate()">Filter</button>
+            <br>
+            <button onclick="resetDate()">Reset</button>
         </div>
     </div>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
     <script>
         const dates=['2021-11-01', '2021-11-02', '2021-11-03', '2021-11-04', '2021-11-05',
     '2021-11-06', '2021-11-07']
-    const datapoints=[18,12,6,9,12,3,9]
+    const datapoints=[18,12,6,9,12,3,9];
 
-    
+
+    console.log(new Date('2021-11-01 00:00:00 GMT+0800'))
+
+    const convertedDates = dates.map(date => new Date(date).setHours(0,0,0,0));
+    console.log(convertedDates)
         // setup 
         const data = {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            labels:dates,
             datasets: [{
                 label: 'Weekly Sales',
                 data: datapoints,
@@ -83,6 +95,13 @@
             data,
             options: {
                 scales: {
+                    x:{
+                        type:'time',
+                        time:{
+                            unit:'day'
+                        }
+
+                    },
                     y: {
                         beginAtZero: true
                     }
@@ -95,6 +114,15 @@
             document.getElementById('myChart'),
             config
         );
+        function filterDate(){
+           // (new Date('2021-11-01 00:00:00 GMT+0800'))
+          const start1 = document.getElementById('start').value;
+          const start = start1.setHours(0,0,0,0);
+          const end1 = document.getElementById('end').value;
+          const end= end1.setHours(0,0,0,0);
+
+          const filterDates
+        }
     </script>
 
 </body>
